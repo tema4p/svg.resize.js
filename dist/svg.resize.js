@@ -463,29 +463,17 @@
         return [diffX, diffY];
     };
 
-    ResizeHandler.prototype.checkAspectRatio = function (snap, isReverse) {
-        if (!this.options.saveAspectRatio) {
-            return snap;
-        }
+        ResizeHandler.prototype.checkAspectRatio = function (snap, isReverse) {
+            if (!this.options.saveAspectRatio) {
+                return snap;
+            }
 
-        var updatedSnap = snap.slice();
-        var aspectRatio = this.parameters.box.width / this.parameters.box.height;
-        var newW = this.parameters.box.width + snap[0];
-        var newH = this.parameters.box.height - snap[1];
-        var newAspectRatio = newW / newH;
+            var updatedSnap = snap.slice();
+            var aspectRatio = this.parameters.box.width / this.parameters.box.height;
+            updatedSnap[1] = snap[0] / aspectRatio;
 
-        if (newAspectRatio < aspectRatio) {
-            // Height is too big. Adapt it
-            updatedSnap[1] = newW / aspectRatio - this.parameters.box.height;
-            isReverse && (updatedSnap[1] = -updatedSnap[1]);
-        } else if (newAspectRatio > aspectRatio) {
-            // Width is too big. Adapt it
-            updatedSnap[0] = this.parameters.box.width - newH * aspectRatio;
-            isReverse && (updatedSnap[0] = -updatedSnap[0]);
-        }
-
-        return updatedSnap;
-    };
+            return updatedSnap;
+        };
 
     SVG.extend(SVG.Element, {
         // Resize element with mouse
