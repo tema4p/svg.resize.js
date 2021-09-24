@@ -460,6 +460,7 @@
         var updatedSnap = snap.slice();
         var aspectRatio = this.parameters.box.width / this.parameters.box.height;
         updatedSnap[1] = snap[0] / aspectRatio;
+        isReverse && (updatedSnap[1] = -updatedSnap[1]);
 
         return updatedSnap;
     };
